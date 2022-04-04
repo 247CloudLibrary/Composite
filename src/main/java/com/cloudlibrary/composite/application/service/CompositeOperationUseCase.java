@@ -2,10 +2,13 @@ package com.cloudlibrary.composite.application.service;
 
 import com.cloudlibrary.composite.application.domain.Composite;
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 import java.util.List;
 
+
+@Component
 public interface CompositeOperationUseCase {
 
     List<FindBookResult> getBookListAll();

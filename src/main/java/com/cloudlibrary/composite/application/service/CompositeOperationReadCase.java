@@ -4,9 +4,11 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 
+@Component
 public interface CompositeOperationReadCase {
 
     CompositeOperationUseCase createBook(BookCreatedCommand command);
