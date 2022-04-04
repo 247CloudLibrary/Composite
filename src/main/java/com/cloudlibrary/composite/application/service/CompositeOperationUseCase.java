@@ -52,12 +52,14 @@ public interface CompositeOperationUseCase {
         private final long libraryId;
         private final String isbn;
         private final String title;
-        private final String thumnailimage;
-        private final String coverimage;
+        private final String thumnailImage;
+        private final String coverImage;
+        private final String author;
+        private final String translator;
         private final String contents;
         private final String publisher;
         private final String type;
-        private final int genre;
+        private final String genre;
         private final String barcode;
         private final String bookStatus;
         private final Timestamp publishdatetime;
@@ -74,8 +76,10 @@ public interface CompositeOperationUseCase {
                     .libraryId(book.getLibraryId())
                     .isbn(book.getIsbn())
                     .title(book.getTitle())
-                    .thumnailimage(book.getThumnailimage())
-                    .coverimage(book.getCoverimage())
+                    .thumnailImage(book.getThumnailImage())
+                    .coverImage(book.getCoverImage())
+                    .author(book.getAuthor())
+                    .translator(book.getTranslator())
                     .contents(book.getContents())
                     .publisher(book.getPublisher())
                     .type(book.getType())
@@ -115,6 +119,12 @@ public interface CompositeOperationUseCase {
         }
     }
 
+    @Getter
+    @ToString
+    @Builder
+    class FindBookAndLendingResult{
+
+    }
 
 
 }
