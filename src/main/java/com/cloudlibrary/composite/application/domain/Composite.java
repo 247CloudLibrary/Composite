@@ -18,8 +18,10 @@ public class Composite {
     private final long libraryId;
     private final String isbn;
     private final String title;
-    private final String thumnailimage;
-    private final String coverimage;
+    private final String thumnailImage;
+    private final String coverImage;
+    private final String author;
+    private final String translator;
     private final String contents;
     private final String publisher;
     private final String type;
