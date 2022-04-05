@@ -1,130 +1,59 @@
 package com.cloudlibrary.composite.application.service;
 
-import com.cloudlibrary.composite.application.domain.Composite;
-import lombok.*;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
-import java.util.List;
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Component
 public interface CompositeOperationUseCase {
 
-    List<FindBookResult> getBookListAll();
-    FindBookResult getBook(BookFindQuery query);
-    FindLendingResult getLending(LendingFindQuery query);
+    CompositeReadUseCase createBook(BookCreatedCommand command);
+    CompositeReadUseCase.FindLendingResult createLending(LendingCreatedCommand command);
 
-    @NoArgsConstructor
+
     @EqualsAndHashCode(callSuper = false)
-    @Getter
-    @ToString
-    class BookFindQuery {
-        private long bookId;
-
-        public BookFindQuery(long bookId) {
-            this.bookId = bookId;
-        }
-    }
-
-    @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
-    @Getter
-    @ToString
-    class LendingFindQuery {
-        private long uid;
-        private long bookId;
-        private long libraryId;
-
-        public LendingFindQuery(long uid, long bookId, long libraryId) {
-            this.uid = uid;
-            this.bookId = bookId;
-            this.libraryId = libraryId;
-        }
-    }
-
-    @Getter
-    @ToString
     @Builder
-    class FindBookResult {
+    @Getter
+    @ToString
+    class BookCreatedCommand{
         private final long bookId;
         private final String rid;
         private final long libraryId;
         private final String isbn;
         private final String title;
-        private final String thumnailImage;
         private final String coverImage;
-        private final String author;
-        private final String translator;
         private final String contents;
         private final String publisher;
         private final String type;
-        private final String genre;
+        private final int genre;
         private final String barcode;
         private final String bookStatus;
-        private final Timestamp publishdatetime;
-        private final Timestamp lendingAvailableDateTime;
-        private final Timestamp createdAt;
-        private final Timestamp updatedAt;
+        private final LocalDate publishDate;
+        private final LocalDateTime lendingAvailableDateTime;
+        private final LocalDateTime createdAt;
+        private final LocalDateTime updatedAt;
         private final String rfid;
         private final String category;
-
-        public static FindBookResult findByBook(Composite book) {
-            return FindBookResult.builder()
-                    .bookId(book.getBookId())
-                    .rid(book.getRid())
-                    .libraryId(book.getLibraryId())
-                    .isbn(book.getIsbn())
-                    .title(book.getTitle())
-                    .thumnailImage(book.getThumnailImage())
-                    .coverImage(book.getCoverImage())
-                    .author(book.getAuthor())
-                    .translator(book.getTranslator())
-                    .contents(book.getContents())
-                    .publisher(book.getPublisher())
-                    .type(book.getType())
-                    .genre(book.getGenre())
-                    .barcode(book.getBarcode())
-                    .bookStatus(book.getBookStatus())
-                    .publishdatetime(book.getPublishdatetime())
-                    .lendingAvailableDateTime(book.getLendingAvailableDateTime())
-                    .createdAt(book.getCreatedAt())
-                    .updatedAt(book.getUpdatedAt())
-                    .rfid(book.getRfid())
-                    .category(book.getCategory())
-                    .build();
-        }
     }
 
+    @EqualsAndHashCode(callSuper = false)
+    @Builder
     @Getter
     @ToString
-    @Builder
-    class FindLendingResult{
+    class LendingCreatedCommand{
+        // Lending Info
         private final long bookId;
         private final long libraryId;
         private final long uid;
         private final String lendingStatus;
-        private final Timestamp lendingDateTime;
-        private final Timestamp reservationDateTime;
-
-        public static FindLendingResult findByLending(Composite lending){
-            return FindLendingResult.builder()
-                    .bookId(lending.getBookId())
-                    .libraryId(lending.getLibraryId())
-                    .uid(lending.getUid())
-                    .lendingStatus(lending.getLendingStatus())
-                    .lendingDateTime(lending.getLendingDateTime())
-                    .reservationDateTime(lending.getReservationDateTime())
-                    .build();
-        }
+        private final LocalDateTime lendingDateTime;
+        private final LocalDateTime reservationDateTime;
     }
-
-    @Getter
-    @ToString
-    @Builder
-    class FindBookAndLendingResult{
-
-    }
-
-
 }
