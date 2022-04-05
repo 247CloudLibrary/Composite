@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -15,9 +14,9 @@ import java.time.LocalDateTime;
 @Builder
 public class Composite {
     // Book Info
-    private final long bookId;
+    private final Long bookId;
     private final String rid;
-    private final long libraryId;
+    private final Long libraryId;
     private final String libraryName;
     private final String isbn;
     private final String title;
@@ -38,7 +37,7 @@ public class Composite {
 
 
     // Lending Info
-    private final long uid;
+    private final Long uid;
     private final String lendingStatus;
     private final LocalDateTime lendingDateTime;
     private final LocalDateTime reservationDateTime;
