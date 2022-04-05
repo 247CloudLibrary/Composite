@@ -1,14 +1,12 @@
-package com.cloudlibrary.composite.ui.view;
+package com.cloudlibrary.composite.ui.view.composite;
 
 
 import com.cloudlibrary.composite.application.service.CompositeReadUseCase;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -18,9 +16,9 @@ import java.time.LocalDateTime;
 public class CompositeView {
 
     @ApiModelProperty(value = "도서 아이디")
-    private final long bookId;
+    private final Long bookId;
     @ApiModelProperty(value = "도서관 아이디")
-    private final long libraryId;
+    private final Long libraryId;
     @ApiModelProperty(value = "도서관 이름")
     private final String libraryName;
     @ApiModelProperty(value = "도서 제목")
