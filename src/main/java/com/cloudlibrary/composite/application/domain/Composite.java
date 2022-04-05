@@ -21,7 +21,6 @@ public class Composite {
     private final String libraryName;
     private final String isbn;
     private final String title;
-    private final String thumnailImage;
     private final String coverImage;
     private final String author;
     private final String translator;
@@ -41,7 +40,7 @@ public class Composite {
     // Lending Info
     private final long uid;
     private final String lendingStatus;
-    private final Timestamp lendingDateTime;
-    private final Timestamp reservationDateTime;
+    private final LocalDateTime lendingDateTime;
+    private final LocalDateTime reservationDateTime;
 
 }
