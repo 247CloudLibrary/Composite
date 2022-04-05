@@ -42,8 +42,16 @@ public class CompositeController {
 
     // TODO : PATCH 예약
 
+    // TODO : 도서 리스트 조회
+    @GetMapping("/search?type={value}")
+    public ResponseEntity<CompositeView> getComposites(@PathVariable("value") String value){
+
+        return null;
+    }
+
+
     // TODO : 단일 도서 조회
-    @GetMapping("/lending/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CompositeView> getComposite(@PathVariable("id") long id){
 
         // 임시 생성
