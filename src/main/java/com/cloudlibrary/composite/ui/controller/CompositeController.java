@@ -3,16 +3,14 @@ package com.cloudlibrary.composite.ui.controller;
 import com.cloudlibrary.composite.application.domain.Composite;
 import com.cloudlibrary.composite.application.service.CompositeOperationUseCase;
 import com.cloudlibrary.composite.application.service.CompositeReadUseCase;
-import com.cloudlibrary.composite.ui.view.CompositeView;
+import com.cloudlibrary.composite.ui.view.ApiResponseView;
+import com.cloudlibrary.composite.ui.view.composite.CompositeView;
 import io.swagger.annotations.Api;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,7 +19,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @Api("컴포짓 API")
-@RequestMapping("/composite")
+@RequestMapping("/v1/composite")
 public class CompositeController {
     private final CompositeReadUseCase compositeReadUseCase;
     private final CompositeOperationUseCase compositeOperationUseCase;
@@ -43,17 +41,16 @@ public class CompositeController {
 
     // TODO : 도서 리스트 조회
     @GetMapping("/search")
-    public ResponseEntity<List<CompositeView>> getComposite(@RequestParam("keyword") String keyword, @RequestParam("libraryArr") List<Long> libraryId,
+    public ResponseEntity<ApiResponseView<List<CompositeView>>> getComposite(@RequestParam("keyword") String keyword, @RequestParam("libraryArr") List<Long> libraryId,
                                                        @RequestParam ("publisher") String publisher, @RequestParam("author") String author,
                                                        @RequestParam ("category") String category){
-
         List<Composite> compositeList = new ArrayList<>();
 
         // 임시 composite 정보 도서관 5개 각각 10개 생성 총 50개
         for (int i=1; i<=5; ++i){
             for(int j=1; j<=10; ++j){
                 Composite build =Composite.builder()
-                        .bookId(j + 10)
+                        .bookId(j + 10L)
                         .libraryId(i + 1000L)
                         .libraryName("도서관 " + i)
                         .title("테스트 도서 " + j)
@@ -78,20 +75,14 @@ public class CompositeController {
         for (Composite composite : compositeList) {
             compositeViews.add(new CompositeView(CompositeReadUseCase.FindBookAndLendingResult.findByBookAndLending(composite)));
         }
-        return ResponseEntity.ok(compositeViews);
-
-
-
-
-
-
+        return ResponseEntity.ok(new ApiResponseView<>(compositeViews));
 
     }
 
 
     // TODO : 단일 도서 조회
     @GetMapping("/{id}")
-    public ResponseEntity<CompositeView> getComposite(@PathVariable("id") long id){
+    public ResponseEntity<ApiResponseView<CompositeView>> getComposite(@PathVariable("id") Long id){
 
         // 임시 생성
         Composite comp = Composite.builder()
@@ -111,9 +102,7 @@ public class CompositeController {
                 .lendingDateTime(LocalDateTime.now())
                 .build();
 
-
-
-        return ResponseEntity.ok(new CompositeView(CompositeReadUseCase.FindBookAndLendingResult.findByBookAndLending(comp)));
+        return ResponseEntity.ok(new ApiResponseView<>(new CompositeView(CompositeReadUseCase.FindBookAndLendingResult.findByBookAndLending(comp))));
     }
 
 }
