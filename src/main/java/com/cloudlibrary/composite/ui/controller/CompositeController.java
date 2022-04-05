@@ -9,15 +9,14 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -43,10 +42,50 @@ public class CompositeController {
     // TODO : PATCH 예약
 
     // TODO : 도서 리스트 조회
-    @GetMapping("/search?type={value}")
-    public ResponseEntity<CompositeView> getComposites(@PathVariable("value") String value){
+    @GetMapping("/search")
+    public ResponseEntity<List<CompositeView>> getComposite(@RequestParam("keyword") String keyword, @RequestParam("libraryArr") List<Long> libraryId,
+                                                       @RequestParam ("publisher") String publisher, @RequestParam("author") String author,
+                                                       @RequestParam ("category") String category){
 
-        return null;
+        List<Composite> compositeList = new ArrayList<>();
+
+        // 임시 composite 정보 도서관 5개 각각 10개 생성 총 50개
+        for (int i=1; i<=5; ++i){
+            for(int j=1; j<=10; ++j){
+                Composite build =Composite.builder()
+                        .bookId(j + 10)
+                        .libraryId(i + 1000L)
+                        .libraryName("도서관 " + i)
+                        .title("테스트 도서 " + j)
+                        .barcode("임시 바코드 " + i + 10)
+                        .author("작가 " + j + 10)
+                        .translator("번역가 " + j + 10)
+                        .contents("이 책은 테스트용 입니다. query parameter를 통해 전달 받은 책 id 는 " + i + 10 + "입니다.")
+                        .genre("테스트 장르 " + j + 10)
+                        .coverImage("커버 이미지 임시 경로 " + j + 10)
+                        .publisher("출판사 " + j + 10)
+                        .publishDate(LocalDate.now())
+                        .lendingStatus("대출 가능 " + j + 10)
+                        .lendingDateTime(LocalDateTime.now())
+                        .build();
+                compositeList.add(build);
+            }
+
+        }
+
+        // bookId 기준으로 정렬 해서 List<FindBookAndLendingResult> 만들기
+        List<CompositeView> compositeViews = new ArrayList<>();
+        for (Composite composite : compositeList) {
+            compositeViews.add(new CompositeView(CompositeReadUseCase.FindBookAndLendingResult.findByBookAndLending(composite)));
+        }
+        return ResponseEntity.ok(compositeViews);
+
+
+
+
+
+
+
     }
 
 
