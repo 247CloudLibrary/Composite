@@ -23,9 +23,9 @@ public interface CompositeOperationUseCase {
     @Getter
     @ToString
     class BookCreatedCommand{
-        private final long bookId;
+        private final Long bookId;
         private final String rid;
-        private final long libraryId;
+        private final Long libraryId;
         private final String isbn;
         private final String title;
         private final String coverImage;
@@ -49,9 +49,9 @@ public interface CompositeOperationUseCase {
     @ToString
     class LendingCreatedCommand{
         // Lending Info
-        private final long bookId;
-        private final long libraryId;
-        private final long uid;
+        private final Long bookId;
+        private final Long libraryId;
+        private final Long uid;
         private final String lendingStatus;
         private final LocalDateTime lendingDateTime;
         private final LocalDateTime reservationDateTime;

@@ -22,9 +22,9 @@ public interface CompositeReadUseCase {
     @Getter
     @ToString
     class BookFindQuery {
-        private long bookId;
+        private Long bookId;
 
-        public BookFindQuery(long bookId) {
+        public BookFindQuery(Long bookId) {
             this.bookId = bookId;
         }
     }
@@ -34,11 +34,11 @@ public interface CompositeReadUseCase {
     @Getter
     @ToString
     class LendingFindQuery {
-        private long uid;
-        private long bookId;
-        private long libraryId;
+        private Long uid;
+        private Long bookId;
+        private Long libraryId;
 
-        public LendingFindQuery(long uid, long bookId, long libraryId) {
+        public LendingFindQuery(Long uid, Long bookId, Long libraryId) {
             this.uid = uid;
             this.bookId = bookId;
             this.libraryId = libraryId;
@@ -50,9 +50,9 @@ public interface CompositeReadUseCase {
     @ToString
     @Builder
     class FindBookResult {
-        private final long bookId;
+        private final Long bookId;
         private final String rid;
-        private final long libraryId;
+        private final Long libraryId;
         private final String isbn;
         private final String title;
         private final String coverImage;
