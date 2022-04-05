@@ -99,9 +99,9 @@ public interface CompositeReadUseCase {
     @ToString
     @Builder
     class FindLendingResult{
-        private final long bookId;
-        private final long libraryId;
-        private final long uid;
+        private final Long bookId;
+        private final Long libraryId;
+        private final Long uid;
         private final String lendingStatus;
         private final LocalDateTime lendingDateTime;
         private final LocalDateTime reservationDateTime;
@@ -122,8 +122,8 @@ public interface CompositeReadUseCase {
     @ToString
     @Builder
     class FindBookAndLendingResult{
-        private final long bookId;
-        private final long libraryId;
+        private final Long bookId;
+        private final Long libraryId;
         private final String libraryName;
         private final String title;
         private final String contents;
