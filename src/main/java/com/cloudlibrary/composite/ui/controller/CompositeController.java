@@ -1,11 +1,8 @@
 package com.cloudlibrary.composite.ui.controller;
 
 import com.cloudlibrary.composite.application.domain.Composite;
-import com.cloudlibrary.composite.application.service.CompositeOperationUseCase;
-import com.cloudlibrary.composite.application.service.CompositeReadUseCase;
 import com.cloudlibrary.composite.ui.view.ApiResponseView;
 import com.cloudlibrary.composite.ui.view.composite.CompositeCompactView;
-import com.cloudlibrary.composite.ui.view.composite.CompositeView;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +19,7 @@ import java.util.List;
 @Api("컴포짓 API")
 @RequestMapping("/v1/composite")
 public class CompositeController {
-    private final CompositeReadUseCase compositeReadUseCase;
-    private final CompositeOperationUseCase compositeOperationUseCase;
 
-    @Autowired
-    public CompositeController(CompositeReadUseCase compositeReadUseCase, CompositeOperationUseCase compositeOperationUseCase) {
-        this.compositeReadUseCase = compositeReadUseCase;
-        this.compositeOperationUseCase = compositeOperationUseCase;
-    }
 
 
     // TODO : POST 책 등록
