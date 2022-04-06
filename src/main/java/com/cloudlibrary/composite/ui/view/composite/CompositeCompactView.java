@@ -45,6 +45,10 @@ public class CompositeCompactView {
     private final String lendingStatus;
     @ApiModelProperty(value = "대출 일")
     private final LocalDateTime lendingDateTime;
+    @ApiModelProperty(value = "도서 카테고리")
+    private final String category;
+    @ApiModelProperty(value = "도서 타입")
+    private final String type;
 
     public CompositeCompactView(Composite result){
         // TODO : Composite result 이후에 CompositeFindResult로 변경
@@ -64,6 +68,8 @@ public class CompositeCompactView {
         this.genre = result.getGenre();
         this.lendingStatus = result.getLendingStatus();
         this.lendingDateTime = result.getLendingDateTime();
+        this.category = result.getCategory();
+        this.type = result.getType();
     }
 
 }

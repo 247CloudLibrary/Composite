@@ -50,10 +50,13 @@ public class CompositeController {
                         .translator("번역가 " + j + 10)
                         .contents("이 책은 테스트용 입니다. query parameter를 통해 전달 받은 책 id 는 " + i + 10 + "입니다.")
                         .genre("테스트 장르 " + j + 10)
+                        .thumbnailImage("썸네일 이미지 임시 경로 " + j + 10)
                         .coverImage("커버 이미지 임시 경로 " + j + 10)
                         .publisher("출판사 " + j + 10)
                         .publishDate(LocalDate.now())
                         .lendingStatus("대출 가능 " + j + 10)
+                        .category("테스트 카테고리" + j + 10)
+                        .type("테스트 도서 타입" + j + 10)
                         .lendingDateTime(LocalDateTime.now())
                         .build();
                 compositeList.add(build);
@@ -86,10 +89,13 @@ public class CompositeController {
                 .translator("번역가 " + id)
                 .contents("이 책은 테스트용 입니다. query parameter를 통해 전달 받은 책 id 는 " + id + "입니다.")
                 .genre("테스트 장르 " + id)
+                .thumbnailImage("썸네일 이미지 임시 경로 " + id)
                 .coverImage("커버 이미지 임시 경로 " + id)
                 .publisher("출판사 " + id)
                 .publishDate(LocalDate.now())
                 .lendingStatus("대출 가능 " + id)
+                .category("테스트 카테고리" + id)
+                .type("테스트 도서 타입" + id)
                 .lendingDateTime(LocalDateTime.now())
                 .build();
 
