@@ -4,6 +4,7 @@ import com.cloudlibrary.composite.application.domain.Composite;
 import com.cloudlibrary.composite.application.service.CompositeOperationUseCase;
 import com.cloudlibrary.composite.application.service.CompositeReadUseCase;
 import com.cloudlibrary.composite.ui.view.ApiResponseView;
+import com.cloudlibrary.composite.ui.view.composite.CompositeCompactView;
 import com.cloudlibrary.composite.ui.view.composite.CompositeView;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,7 @@ public class CompositeController {
 
     // TODO : 도서 리스트 조회
     @GetMapping("/search")
-    public ResponseEntity<ApiResponseView<List<CompositeView>>> getComposite(@RequestParam("keyword") String keyword, @RequestParam("libraryArr") List<Long> libraryId,
+    public ResponseEntity<ApiResponseView<List<CompositeCompactView>>> getComposite(@RequestParam("keyword") String keyword, @RequestParam("libraryArr") List<Long> libraryId,
                                                        @RequestParam ("publisher") String publisher, @RequestParam("author") String author,
                                                        @RequestParam ("category") String category){
         List<Composite> compositeList = new ArrayList<>();
@@ -71,18 +72,18 @@ public class CompositeController {
         }
 
         // bookId 기준으로 정렬 해서 List<FindBookAndLendingResult> 만들기
-        List<CompositeView> compositeViews = new ArrayList<>();
+        List<CompositeCompactView> compositeCompactViews = new ArrayList<>();
         for (Composite composite : compositeList) {
-            compositeViews.add(new CompositeView(CompositeReadUseCase.FindBookAndLendingResult.findByBookAndLending(composite)));
+            compositeCompactViews.add(new CompositeCompactView(composite));
         }
-        return ResponseEntity.ok(new ApiResponseView<>(compositeViews));
+        return ResponseEntity.ok(new ApiResponseView<>(compositeCompactViews));
 
     }
 
 
     // TODO : 단일 도서 조회
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseView<CompositeView>> getComposite(@PathVariable("id") Long id){
+    public ResponseEntity<ApiResponseView<CompositeCompactView>> getComposite(@PathVariable("id") Long id){
 
         // 임시 생성
         Composite comp = Composite.builder()
@@ -102,7 +103,7 @@ public class CompositeController {
                 .lendingDateTime(LocalDateTime.now())
                 .build();
 
-        return ResponseEntity.ok(new ApiResponseView<>(new CompositeView(CompositeReadUseCase.FindBookAndLendingResult.findByBookAndLending(comp))));
+        return ResponseEntity.ok(new ApiResponseView<>(new CompositeCompactView(comp)));
     }
 
 }
