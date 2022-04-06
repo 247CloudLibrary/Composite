@@ -3,10 +3,10 @@ package com.cloudlibrary.composite.ui.view.composite;
 
 import com.cloudlibrary.composite.application.domain.Composite;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.ToString;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,6 +27,8 @@ public class CompositeCompactView {
     private final String title;
     @ApiModelProperty(value = "도서 썸네일 이미지")
     private final String thumbnailImage;
+    @ApiModelProperty(value = "도서 표지 이미지")
+    private final String coverImage;
     @ApiModelProperty(value = "작가")
     private final String author;
     @ApiModelProperty(value = "번역가")
@@ -53,6 +55,7 @@ public class CompositeCompactView {
         this.barcode = result.getBarcode();
         this.title = result.getTitle();
         this.thumbnailImage = result.getThumbnailImage();
+        this.coverImage = result.getCoverImage();
         this.author = result.getAuthor();
         this.translator = result.getTranslator();
         this.contents = result.getContents();
