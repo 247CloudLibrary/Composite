@@ -20,6 +20,7 @@ public class Composite {
     private final String libraryName;
     private final String isbn;
     private final String title;
+    private final String thumbnailImage;
     private final String coverImage;
     private final String author;
     private final String translator;
