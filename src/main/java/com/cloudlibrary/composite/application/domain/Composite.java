@@ -34,13 +34,24 @@ public class Composite {
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
     private final String rfid;
-    private final String category;
+    private final Long category;
 
 
     // Lending Info
+    private final Long lendingId;
     private final Long uid;
     private final String lendingStatus;
     private final LocalDateTime lendingDateTime;
+    private final LocalDateTime returnDateTime;
     private final LocalDateTime reservationDateTime;
+
+    // reservation Info
+    private final Long orderNum;
+    private final LocalDateTime cancelDateTime;
+
+
+
+
+
 
 }
