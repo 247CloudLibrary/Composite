@@ -46,7 +46,7 @@ public class CompositeCompactView {
     @ApiModelProperty(value = "대출 일")
     private final LocalDateTime lendingDateTime;
     @ApiModelProperty(value = "도서 카테고리")
-    private final String category;
+    private final Long category;
     @ApiModelProperty(value = "도서 타입")
     private final String type;
 
