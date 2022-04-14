@@ -10,7 +10,6 @@ public interface CompositeEntityRepository {
     Optional<CompositeEntity> findCompositeByBookId(Long bookId);
     List<CompositeEntity> findCompositeAll();
     Optional<CompositeEntity> saveComposite(CompositeEntity compositeEntity);
-    Optional<CompositeEntity> updateComposite(CompositeEntity compositeEntity);
 //    delete 아직
 
 }
