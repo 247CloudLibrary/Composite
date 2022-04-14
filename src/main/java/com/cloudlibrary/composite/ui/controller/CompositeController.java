@@ -38,11 +38,11 @@ public class CompositeController {
         List<Composite> compositeList = new ArrayList<>();
 
         // 임시 composite 정보 도서관 5개 각각 10개 생성 총 50개
-        for (int i=1; i<=5; ++i){
-            for(int j=1; j<=10; ++j){
+        for (long i=1L; i<=5; ++i){
+            for(long j=1L; j<=10; ++j){
                 Composite build =Composite.builder()
-                        .bookId(j + 10L)
-                        .libraryId(i + 1000L)
+                        .bookId(j)
+                        .libraryId(i)
                         .libraryName("도서관 " + i)
                         .title("테스트 도서 " + j)
                         .barcode("임시 바코드 " + i + 10)
@@ -81,7 +81,7 @@ public class CompositeController {
         // 임시 생성
         Composite comp = Composite.builder()
                 .bookId(id)
-                .libraryId(id + 1000L)
+                .libraryId(id)
                 .libraryName("test " + id)
                 .title("임시 데이터 bookId = " + id)
                 .barcode("임시 바코드 " + id)
