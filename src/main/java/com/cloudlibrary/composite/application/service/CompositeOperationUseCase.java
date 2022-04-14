@@ -11,7 +11,12 @@ import java.time.LocalDateTime;
 public interface CompositeOperationUseCase {
 
     CompositeReadUseCase.FindCompositeResult createComposite(CompositeCreateCommand command);
-//    CompositeReadUseCase.FindCompositeResult
+    CompositeReadUseCase.FindCompositeResult updateBookStatus(CompositeUpdateCommand command);
+    CompositeReadUseCase.FindCompositeResult updateLendingStatus(CompositeUpdateCommand command);
+    CompositeReadUseCase.FindCompositeResult updateReservationInfo(CompositeUpdateCommand command);
+
+//  도서 또는 도서관 정보 업데이트 관련
+//  CompositeReadUseCase.FindCompositeResult updateComposite(CompositeUpdateCommand command);
 
     @EqualsAndHashCode(callSuper = false)
     @Builder
