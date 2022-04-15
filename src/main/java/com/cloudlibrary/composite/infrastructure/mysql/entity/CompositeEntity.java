@@ -2,14 +2,13 @@ package com.cloudlibrary.composite.infrastructure.mysql.entity;
 
 
 import com.cloudlibrary.composite.application.domain.Composite;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -19,11 +18,10 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table(name = "composite")
-public class CompositeEntity {
+public class CompositeEntity implements Serializable {
 
     @Id
     private Long bookId;
-    @Id
     private Long libraryId;
 
     private String rid;
