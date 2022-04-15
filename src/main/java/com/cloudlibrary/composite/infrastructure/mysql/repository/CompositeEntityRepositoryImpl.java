@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 @Repository
-public class CompositeEntiryRepositoryImpl implements CompositeEntityRepository{
+public class CompositeEntityRepositoryImpl implements CompositeEntityRepository{
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -28,9 +28,8 @@ public class CompositeEntiryRepositoryImpl implements CompositeEntityRepository{
     @Override
     public List<CompositeEntity> findCompositeAll() {
 
-        List<CompositeEntity> compositeEntities = entityManager
+        return entityManager
                 .createQuery("select composites from CompositeEntity composites", CompositeEntity.class).getResultList();
-        return compositeEntities;
     }
 
     @Override
