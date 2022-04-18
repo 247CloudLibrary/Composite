@@ -1,0 +1,16 @@
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "<TASK_DEFINITION>"
+        LoadBalancerInfo:
+          ContainerName: "composite-container"
+          ContainerPort: 8080
+        # Optional properties
+        PlatformVersion: "LATEST"
+        NetworkConfiguration:
+          AwsvpcConfiguration:
+            Subnets: ["subnet-04f68f28589ae0ec2", "subnet-0b153d31e28368e45"]
+            SecurityGroups: ["sg-0ce2f3f01d20c9265"]
+            AssignPublicIp: "ENABLED"
