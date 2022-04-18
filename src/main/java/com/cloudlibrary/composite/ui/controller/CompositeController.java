@@ -55,7 +55,7 @@ public class CompositeController {
                         .publisher("출판사 " + j + 10)
                         .publishDate(LocalDate.now())
                         .lendingStatus("대출 가능 " + j + 10)
-                        .category("테스트 카테고리" + j + 10)
+                        .category(j + 10L)
                         .type("테스트 도서 타입" + j + 10)
                         .lendingDateTime(LocalDateTime.now())
                         .build();
@@ -94,7 +94,7 @@ public class CompositeController {
                 .publisher("출판사 " + id)
                 .publishDate(LocalDate.now())
                 .lendingStatus("대출 가능 " + id)
-                .category("테스트 카테고리" + id)
+                .category(id)
                 .type("테스트 도서 타입" + id)
                 .lendingDateTime(LocalDateTime.now())
                 .build();
