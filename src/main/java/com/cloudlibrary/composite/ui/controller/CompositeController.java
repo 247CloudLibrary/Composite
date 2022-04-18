@@ -31,6 +31,12 @@ public class CompositeController {
     // TODO : PATCH 예약
 
     // TODO : 도서 리스트 조회
+
+    @GetMapping("/health-check")
+    public ResponseEntity<String> check() {
+        return ResponseEntity.ok("health-check");
+    }
+
     @GetMapping("/search")
     public ResponseEntity<ApiResponseView<List<CompositeCompactView>>> getComposite(@RequestParam("keyword") String keyword, @RequestParam("libraryArr") List<Long> libraryId,
                                                        @RequestParam ("publisher") String publisher, @RequestParam("author") String author,
