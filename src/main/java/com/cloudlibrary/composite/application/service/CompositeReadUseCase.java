@@ -32,27 +32,28 @@ public interface CompositeReadUseCase {
         // Book Info
         private final Long bookId;
         private final String rid;
-        private final Long libraryId;
-        private final String libraryName;
         private final String isbn;
         private final String title;
-        private final String thumbnailImage;
+        private final String thumbNailImage;
         private final String coverImage;
         private final String author;
         private final String translator;
         private final String contents;
         private final String publisher;
-        private final String type;
+        private final LocalDate publishDate;
+        private final String bookType;
         private final String genre;
         private final String barcode;
+        private final String rfid;
         private final String bookStatus;
-        private final LocalDate publishDate;
+        private final String libraryName;
+        private final String category;
         private final LocalDateTime createdAt;
         private final LocalDateTime updatedAt;
-        private final String rfid;
-        private final Long category;
+
 
         // Lending Info
+        private final Long libraryId;
         private final Long lendingId;
         private final Long uid;
         private final String lendingStatus;
@@ -73,13 +74,13 @@ public interface CompositeReadUseCase {
                     .libraryName(composite.getLibraryName())
                     .isbn(composite.getIsbn())
                     .title(composite.getTitle())
-                    .thumbnailImage(composite.getThumbnailImage())
+                    .thumbNailImage(composite.getThumbNailImage())
                     .coverImage(composite.getCoverImage())
                     .author(composite.getAuthor())
                     .translator(composite.getTranslator())
                     .contents(composite.getContents())
                     .publisher(composite.getPublisher())
-                    .type(composite.getType())
+                    .bookType(composite.getBookType())
                     .genre(composite.getGenre())
                     .barcode(composite.getBarcode())
                     .bookStatus(composite.getBookStatus())

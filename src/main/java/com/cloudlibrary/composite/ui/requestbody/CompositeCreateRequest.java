@@ -38,7 +38,6 @@ public class CompositeCreateRequest {
     private Long category;
 
 
-    // 이 아래 얘들은 따로 입력 안되는데 없애도 될까?
     // Lending Info
     private Long lendingId;
     private Long uid;

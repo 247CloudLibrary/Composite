@@ -4,10 +4,7 @@ package com.cloudlibrary.composite.infrastructure.mysql.entity;
 import com.cloudlibrary.composite.application.domain.Composite;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,21 +17,26 @@ import java.time.LocalDateTime;
 @Table(name = "composite")
 public class CompositeEntity implements Serializable {
 
-    @Id
+
+    @Id @GeneratedValue
+    private Long compositeId;
+    @Column(nullable = false)
     private Long bookId;
+    @Column(nullable = false)
     private Long libraryId;
 
     private String rid;
+    @Column(nullable = false)
     private String libraryName;
     private String isbn;
     private String title;
-    private String thumbnailImage;
+    private String thumbNailImage;
     private String coverImage;
     private String author;
     private String translator;
     private String contents;
     private String publisher;
-    private String type;
+    private String bookType;
     private String genre;
     private String barcode;
     private String bookStatus;
@@ -42,10 +44,11 @@ public class CompositeEntity implements Serializable {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String rfid;
-    private Long category;
+    private String category;
 
 
     // Lending Info
+    @Column(nullable = false)
     private Long lendingId;
     private Long uid;
     private String lendingStatus;
@@ -65,13 +68,13 @@ public class CompositeEntity implements Serializable {
                 .libraryName(this.libraryName)
                 .isbn(this.isbn)
                 .title(this.title)
-                .thumbnailImage(this.thumbnailImage)
+                .thumbNailImage(this.thumbNailImage)
                 .coverImage(this.coverImage)
                 .author(this.author)
                 .translator(this.translator)
                 .contents(this.contents)
                 .publisher(this.publisher)
-                .type(this.type)
+                .bookType(this.bookType)
                 .genre(this.genre)
                 .barcode(this.barcode)
                 .bookStatus(this.bookStatus)
@@ -98,13 +101,13 @@ public class CompositeEntity implements Serializable {
         this.libraryName = composite.getLibraryName();
         this.isbn = composite.getIsbn();
         this.title = composite.getTitle();
-        this.thumbnailImage = composite.getThumbnailImage();
+        this.thumbNailImage = composite.getThumbNailImage();
         this.coverImage = composite.getCoverImage();
         this.author = composite.getAuthor();
         this.translator = composite.getTranslator();
         this.contents = composite.getContents();
         this.publisher = composite.getPublisher();
-        this.type = composite.getType();
+        this.bookType = composite.getBookType();
         this.genre = composite.getGenre();
         this.barcode = composite.getBarcode();
         this.bookStatus = composite.getBookStatus();
