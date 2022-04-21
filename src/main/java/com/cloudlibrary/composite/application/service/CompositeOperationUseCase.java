@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 public interface CompositeOperationUseCase {
 
     CompositeReadUseCase.FindCompositeResult createComposite(CompositeCreateCommand command);
-    CompositeReadUseCase.FindCompositeResult updateBookStatus(BookStatusUpdateCommand command);
-    CompositeReadUseCase.FindCompositeResult updateLendingStatus(LendingStatusUpdateCommand command);
-    CompositeReadUseCase.FindCompositeResult updateReservationInfo(ReservationInfoUpdateCommand command);
+    CompositeReadUseCase.FindCompositeResult updateBookStatus(BookStatusUpdateCommand command, Long bookId);
+    CompositeReadUseCase.FindCompositeResult updateLendingStatus(LendingStatusUpdateCommand command, Long bookId);
+    CompositeReadUseCase.FindCompositeResult updateReservationInfo(ReservationInfoUpdateCommand command, Long bookId);
 
 //  도서 또는 도서관 정보 업데이트 관련
 //  CompositeReadUseCase.FindCompositeResult updateComposite(CompositeUpdateCommand command);
@@ -30,7 +30,7 @@ public interface CompositeOperationUseCase {
         private final String libraryName;
         private final String isbn;
         private final String title;
-        private final String thumbnailImage;
+        private final String thumbNailImage;
         private final String coverImage;
         private final String author;
         private final String translator;
@@ -73,7 +73,7 @@ public interface CompositeOperationUseCase {
         private final String libraryName;
         private final String isbn;
         private final String title;
-        private final String thumbnailImage;
+        private final String thumbNailImage;
         private final String coverImage;
         private final String author;
         private final String translator;
