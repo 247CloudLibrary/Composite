@@ -103,4 +103,36 @@ public interface CompositeOperationUseCase {
         private final LocalDateTime cancelDateTime;
     }
 
+    @EqualsAndHashCode(callSuper = false)
+    @Builder
+    @Getter
+    @ToString
+    class BookStatusUpdateCommand{
+        private final String bookStatus;
+    }
+
+    @EqualsAndHashCode(callSuper = false)
+    @Builder
+    @Getter
+    @ToString
+    class LendingStatusUpdateCommand{
+        private final String lendingStatus;
+    }
+
+    @EqualsAndHashCode(callSuper = false)
+    @Builder
+    @Getter
+    @ToString
+    class ReservationInfoUpdateCommand{
+        private final Long orderNum;
+
+        private final Long lendingId;
+        private final Long uid;
+        private final Long bookId;
+        private final Long libraryId;
+        private final String libraryName;
+        private final LocalDateTime reservationDateTime;
+        private final LocalDateTime cancelDateTime;
+    }
+
 }
