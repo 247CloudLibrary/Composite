@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CompositeCompactView {
-    @ApiModelProperty(value = "도서 아이디")
+
     private final Long bookId;
     @ApiModelProperty(value = "도서관 아이디")
     private final Long libraryId;
@@ -26,7 +26,7 @@ public class CompositeCompactView {
     @ApiModelProperty(value = "도서 제목")
     private final String title;
     @ApiModelProperty(value = "도서 썸네일 이미지")
-    private final String thumbnailImage;
+    private final String thumbNailImage;
     @ApiModelProperty(value = "도서 표지 이미지")
     private final String coverImage;
     @ApiModelProperty(value = "작가")
@@ -46,19 +46,18 @@ public class CompositeCompactView {
     @ApiModelProperty(value = "대출 일")
     private final LocalDateTime lendingDateTime;
     @ApiModelProperty(value = "도서 카테고리")
-    private final Long category;
+    private final String category;
     @ApiModelProperty(value = "도서 타입")
-    private final String type;
+    private final String bookType;
 
     public CompositeCompactView(Composite result){
-        // TODO : Composite result 이후에 CompositeFindResult로 변경
 
         this.bookId = result.getBookId();
         this.libraryId = result.getLibraryId();
         this.libraryName = result.getLibraryName();
         this.barcode = result.getBarcode();
         this.title = result.getTitle();
-        this.thumbnailImage = result.getThumbnailImage();
+        this.thumbNailImage = result.getThumbNailImage();
         this.coverImage = result.getCoverImage();
         this.author = result.getAuthor();
         this.translator = result.getTranslator();
@@ -69,7 +68,7 @@ public class CompositeCompactView {
         this.lendingStatus = result.getLendingStatus();
         this.lendingDateTime = result.getLendingDateTime();
         this.category = result.getCategory();
-        this.type = result.getType();
+        this.bookType = result.getBookType();
     }
 
 }
