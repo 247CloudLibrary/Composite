@@ -1,5 +1,6 @@
 package com.cloudlibrary.composite.ui.controller;
 
+import com.amazonaws.util.StringUtils;
 import com.cloudlibrary.composite.application.domain.Composite;
 import com.cloudlibrary.composite.application.service.CompositeOperationUseCase;
 import com.cloudlibrary.composite.application.service.CompositeReadUseCase;
@@ -133,47 +134,39 @@ public class CompositeController {
 
     // TODO : 도서 리스트 조회
     @GetMapping("/search")
-    public ResponseEntity<ApiResponseView<List<CompositeCompactView>>> getComposite(@RequestParam("keyword") String keyword, @RequestParam("libraryArr") List<Long> libraryId,
-                                                       @RequestParam ("publisher") String publisher, @RequestParam("author") String author,
-                                                       @RequestParam ("category") String category){
-        List<Composite> compositeList = new ArrayList<>();
+    public ResponseEntity<ApiResponseView<List<CompositeCompactView>>> getComposite(@RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "libraryArr", required = false) List<Long> libraryId,
+                                                       @RequestParam (value = "publisher", required = false) String publisher, @RequestParam(value = "author", required = false) String author,
+                                                       @RequestParam (value = "category", required = false) String category){
+        
 
-
-
-
-        // 임시 composite 정보 도서관 5개 각각 10개 생성 총 50개
-        for (long i=1L; i<=5; ++i){
-            for(long j=1L; j<=10; ++j){
-                Composite build =Composite.builder()
-                        .bookId(j)
-                        .libraryId(i)
-                        .libraryName("도서관 " + i)
-                        .title("테스트 도서 " + j)
-                        .barcode("임시 바코드 " + i + 10)
-                        .author("작가 " + j + 10)
-                        .translator("번역가 " + j + 10)
-                        .contents("이 책은 테스트용 입니다. query parameter를 통해 전달 받은 책 id 는 " + i + 10 + "입니다.")
-                        .genre("테스트 장르 " + j + 10)
-                        .thumbNailImage("썸네일 이미지 임시 경로 " + j + 10)
-                        .coverImage("커버 이미지 임시 경로 " + j + 10)
-                        .publisher("출판사 " + j + 10)
-                        .publishDate(LocalDate.now())
-                        .lendingStatus("대출 가능 " + j + 10)
-                        .category("800")
-                        .bookType("테스트 도서 타입" + j + 10)
-                        .lendingDateTime(LocalDateTime.now())
-                        .build();
-                compositeList.add(build);
-            }
+        if(keyword != null && (!keyword.isEmpty())){
 
         }
 
-        // bookId 기준으로 정렬 해서 List<FindBookAndLendingResult> 만들기
-        List<CompositeCompactView> compositeCompactViews = new ArrayList<>();
-        for (Composite composite : compositeList) {
-            compositeCompactViews.add(new CompositeCompactView(composite));
+        if(!libraryId.isEmpty()){
+
         }
-        return ResponseEntity.ok(new ApiResponseView<>(compositeCompactViews));
+
+        if(publisher != null && (!publisher.isEmpty())){
+
+        }
+
+        if(author != null && !(author.isEmpty())){
+
+        }
+
+        if(category != null && !(category.isEmpty())){
+
+        }
+
+
+
+
+
+
+
+
+        return null;
 
     }
 
