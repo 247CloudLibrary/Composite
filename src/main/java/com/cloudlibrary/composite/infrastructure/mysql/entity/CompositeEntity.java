@@ -17,9 +17,11 @@ import java.time.LocalDateTime;
 @Table(name = "composite")
 public class CompositeEntity implements Serializable {
 
-    @Id
-    @Column(nullable = false)
+    @Id @GeneratedValue
+    private Long compositeId;
+    @Column(nullable = false, unique = true)
     private Long bookId;
+    @Column(unique = true)
     private Long libraryId;
 
     private String rid;
@@ -45,7 +47,9 @@ public class CompositeEntity implements Serializable {
 
 
     // Lending Info
+    @Column(unique = true)
     private Long lendingId;
+    @Column(unique = true)
     private Long uid;
     private String lendingStatus;
     private LocalDateTime lendingDateTime;
@@ -53,6 +57,7 @@ public class CompositeEntity implements Serializable {
     private LocalDateTime reservationDateTime;
 
     // reservation Info
+    @Column(unique = true)
     private Long orderNum;
     private LocalDateTime cancelDateTime;
 
