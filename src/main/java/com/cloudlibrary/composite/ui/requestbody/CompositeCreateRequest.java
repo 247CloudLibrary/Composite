@@ -21,13 +21,13 @@ public class CompositeCreateRequest {
     private String libraryName;
     private String isbn;
     private String title;
-    private String thumbnailImage;
+    private String thumbNailImage;
     private String coverImage;
     private String author;
     private String translator;
     private String contents;
     private String publisher;
-    private String type;
+    private String bookType;
     private String genre;
     private String barcode;
     private String bookStatus;
@@ -35,7 +35,7 @@ public class CompositeCreateRequest {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String rfid;
-    private Long category;
+    private String category;
 
 
     // Lending Info
