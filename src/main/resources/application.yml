@@ -1,13 +1,11 @@
 spring:
   datasource:
-    url: jdbc:mysql://cloudlibrary-compositedb.cscg6f0frodu.us-east-1.rds.amazonaws.com/CloudLibrary_CompositeDB?serverTimezone=UTC&characterEncoding=UTF-8
-    username: yongcloud
-    password: djk!00200
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: cloudlibrary/rds/composite/mysql
+    username: cloudlibrary/rds/composite/mysql
+    driver-class-name: com.amazonaws.secretsmanager.sql.AWSSecretsManagerMySQLDriver
 
   jpa:
-    hibernate:
-      ddl-auto: create
+
     properties:
       hibernate:
         show_sql: true
