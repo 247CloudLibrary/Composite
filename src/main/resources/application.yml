@@ -3,11 +3,8 @@ spring:
     url: cloudlibrary/rds/composite/mysql
     username: cloudlibrary/rds/composite/mysql
     driver-class-name: com.amazonaws.secretsmanager.sql.AWSSecretsManagerMySQLDriver
-
   jpa:
 
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
+    show_sql: true
+    format_sql: true
 

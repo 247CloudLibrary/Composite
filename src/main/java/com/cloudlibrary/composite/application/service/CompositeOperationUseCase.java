@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 public interface CompositeOperationUseCase {
 
     CompositeReadUseCase.FindCompositeResult createComposite(CompositeCreateCommand command);
-    CompositeReadUseCase.FindCompositeResult updateBookStatus(CompositeUpdateCommand command);
-    CompositeReadUseCase.FindCompositeResult updateLendingStatus(CompositeUpdateCommand command);
-    CompositeReadUseCase.FindCompositeResult updateReservationInfo(CompositeUpdateCommand command);
+    CompositeReadUseCase.FindCompositeResult updateBookStatus(BookStatusUpdateCommand command, Long bookId);
+    CompositeReadUseCase.FindCompositeResult updateLendingStatus(LendingStatusUpdateCommand command, Long bookId);
+    CompositeReadUseCase.FindCompositeResult updateReservationInfo(ReservationInfoUpdateCommand command, Long bookId);
 
 //  도서 또는 도서관 정보 업데이트 관련
 //  CompositeReadUseCase.FindCompositeResult updateComposite(CompositeUpdateCommand command);
@@ -30,13 +30,13 @@ public interface CompositeOperationUseCase {
         private final String libraryName;
         private final String isbn;
         private final String title;
-        private final String thumbnailImage;
+        private final String thumbNailImage;
         private final String coverImage;
         private final String author;
         private final String translator;
         private final String contents;
         private final String publisher;
-        private final String type;
+        private final String bookType;
         private final String genre;
         private final String barcode;
         private final String bookStatus;
@@ -44,7 +44,7 @@ public interface CompositeOperationUseCase {
         private final LocalDateTime createdAt;
         private final LocalDateTime updatedAt;
         private final String rfid;
-        private final Long category;
+        private final String category;
 
 
         // Lending Info
@@ -73,13 +73,13 @@ public interface CompositeOperationUseCase {
         private final String libraryName;
         private final String isbn;
         private final String title;
-        private final String thumbnailImage;
+        private final String thumbNailImage;
         private final String coverImage;
         private final String author;
         private final String translator;
         private final String contents;
         private final String publisher;
-        private final String type;
+        private final String bookType;
         private final String genre;
         private final String barcode;
         private final String bookStatus;
@@ -87,7 +87,7 @@ public interface CompositeOperationUseCase {
         private final LocalDateTime createdAt;
         private final LocalDateTime updatedAt;
         private final String rfid;
-        private final Long category;
+        private final String category;
 
 
         // Lending Info
