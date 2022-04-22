@@ -170,6 +170,7 @@ class CompositeServiceTest {
     {
         //given
         List<Long> libraryId = new ArrayList();
+        libraryId.add(1L);
         //when
         var result = compositeService.getCompositeByBookTitle("테스트 책 도서", libraryId);
         //then
