@@ -1,12 +1,13 @@
 package com.cloudlibrary.composite.application.service;
 
 import com.cloudlibrary.composite.application.domain.Composite;
-import com.cloudlibrary.composite.application.mapper.MapperForPatch;
+import com.cloudlibrary.composite.application.mapper.MapperForService;
 import com.cloudlibrary.composite.infrastructure.mysql.entity.CompositeEntity;
 import com.cloudlibrary.composite.infrastructure.mysql.repository.CompositeEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -16,51 +17,41 @@ import java.util.stream.StreamSupport;
 public class CompositeService implements CompositeReadUseCase, CompositeOperationUseCase{
 
     private CompositeEntityRepository compositeEntityRepository;
-    private MapperForPatch mapperForPatch;
+    private MapperForService mapperForService;
 
     @Autowired
-    public CompositeService(CompositeEntityRepository compositeEntityRepository, MapperForPatch mapperForPatch) {
+    public CompositeService(CompositeEntityRepository compositeEntityRepository, MapperForService mapperForService) {
         this.compositeEntityRepository = compositeEntityRepository;
-        this.mapperForPatch = mapperForPatch;
+        this.mapperForService = mapperForService;
     }
 
     @Override
     public FindCompositeResult createComposite(CompositeCreateCommand command) {
 
-        var composite = Composite.builder()
-                .bookId(command.getBookId())
-                .rid(command.getRid())
-                .libraryId(command.getLibraryId())
-                .libraryName(command.getLibraryName())
-                .isbn(command.getIsbn())
-                .title(command.getTitle())
-                .thumbNailImage(command.getThumbNailImage())
-                .coverImage(command.getCoverImage())
-                .author(command.getAuthor())
-                .translator(command.getTranslator())
-                .contents(command.getContents())
-                .publisher(command.getPublisher())
-                .bookType(command.getBookType())
-                .genre(command.getGenre())
-                .barcode(command.getBarcode())
-                .bookStatus(command.getBookStatus())
-                .publishDate(command.getPublishDate())
-                .createdAt(command.getCreatedAt())
-                .updatedAt(command.getUpdatedAt())
-                .rfid(command.getRfid())
-                .category(command.getCategory())
-                .lendingId(command.getLendingId())
-                .uid(command.getUid())
-                .lendingStatus(command.getLendingStatus())
-                .lendingDateTime(command.getLendingDateTime())
-                .returnDateTime(command.getReturnDateTime())
-                .reservationDateTime(command.getReservationDateTime())
-                .build();
+        var query = new BookFindQuery(command.getBookId());
 
-        var compositeEntity = new CompositeEntity(composite);
-        var result = compositeEntityRepository.save(compositeEntity);
+        var findCompositeEntity = compositeEntityRepository.findById(query.getBookId());
 
-        return FindCompositeResult.findByComposite(result.toComposite());
+
+        // update
+        if(findCompositeEntity.isPresent()){
+            mapperForService.updateBookFromCompositeEntity(command, findCompositeEntity.get());
+            compositeEntityRepository.save(findCompositeEntity.get());
+
+            return FindCompositeResult.findByComposite(findCompositeEntity.get().toComposite());
+        }
+        else{
+            // create
+            var newCompositeEntity = new CompositeEntity();
+
+            mapperForService.createBookToCompositeEntity(command, newCompositeEntity);
+            var result = compositeEntityRepository.save(newCompositeEntity);
+
+            return FindCompositeResult.findByComposite(result.toComposite());
+        }
+
+
+
 
     }
 
@@ -73,9 +64,7 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
             return FindCompositeResult.findByComposite(compositeEntity.get().toComposite());
         }
 
-
-        // TODO: 2022/04/21 예외처리
-        return null;
+        return notFoundComposite();
     }
 
     @Override
@@ -88,7 +77,7 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
                 .collect(Collectors.toList());
 
         if(composites.isEmpty()){
-            return null;
+            return new ArrayList<>();
         }
 
         return composites.stream().map(FindCompositeResult::findByComposite).collect(Collectors.toList());
@@ -100,12 +89,13 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
 
         var compositeEntity = compositeEntityRepository.findById(bookId);
         if(compositeEntity.isPresent()){
-            compositeEntity.get().setBookStatus(command.getBookStatus());
+            mapperForService.updateBookStatusFromCompositeEntity(command, compositeEntity.get());
             compositeEntityRepository.save(compositeEntity.get());
+            return FindCompositeResult.findByComposite(compositeEntity.get().toComposite());
         }
 
-        // TODO: 2022/04/21 예외처리
-        return null;
+
+        return notFoundComposite();
     }
 
     @Override
@@ -113,12 +103,13 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
 
         var compositeEntity = compositeEntityRepository.findById(bookId);
         if(compositeEntity.isPresent()){
-            compositeEntity.get().setLendingStatus(command.getLendingStatus());
+            mapperForService.updateLendingStatusFromCompoisteEntity(command, compositeEntity.get());
             compositeEntityRepository.save(compositeEntity.get());
+            return FindCompositeResult.findByComposite(compositeEntity.get().toComposite());
         }
 
-        // TODO: 2022/04/21 예외처리
-        return null;
+
+        return notFoundComposite();
     }
 
     @Override
@@ -127,21 +118,21 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
         var compositeEntity = compositeEntityRepository.findById(bookId);
         if(compositeEntity.isPresent()){
 
-            compositeEntity.get().setOrderNum(command.getOrderNum());
-            compositeEntity.get().setLendingId(command.getLendingId());
-            compositeEntity.get().setUid(command.getUid());
-            compositeEntity.get().setBookId(command.getBookId());
-            compositeEntity.get().setLibraryId(command.getLibraryId());
-            compositeEntity.get().setLibraryName(command.getLibraryName());
-            compositeEntity.get().setReservationDateTime(command.getReservationDateTime());
-            compositeEntity.get().setCancelDateTime(command.getCancelDateTime());
-
+            mapperForService.updateReservationInfoFromCompositeEntity(command, compositeEntity.get());
             compositeEntityRepository.save(compositeEntity.get());
+            return FindCompositeResult.findByComposite(compositeEntity.get().toComposite());
         }
 
-        // TODO: 2022/04/21 예외처리
-        return null;
 
+        return notFoundComposite();
+
+    }
+
+
+    private FindCompositeResult notFoundComposite() {
+        return FindCompositeResult.findByComposite(Composite.builder()
+                .bookId(-1L)
+                .build());
     }
 
 }
