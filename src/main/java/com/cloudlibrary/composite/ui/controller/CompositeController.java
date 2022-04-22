@@ -48,7 +48,7 @@ public class CompositeController {
     public ResponseEntity<ApiResponseView<CompositeView>> createComposite(@RequestBody CompositeCreateRequest request){
 
         var command = CompositeOperationUseCase.CompositeCreateCommand.builder()
-                .bookId(request.getBookId())
+                .bookId(request.getId())
                 .rid(request.getRid())
                 .libraryId(request.getLibraryId())
                 .libraryName(request.getLibraryName())

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CompositeCreateRequest {
     // Book Info
-    private Long bookId;
+    private Long id;
     private String rid;
     private Long libraryId;
     private String libraryName;
