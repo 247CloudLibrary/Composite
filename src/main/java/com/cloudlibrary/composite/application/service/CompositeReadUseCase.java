@@ -11,6 +11,10 @@ public interface CompositeReadUseCase {
 
     List<FindCompositeResult> getCompositeListAll();
     FindCompositeResult getCompositeByBookId(BookFindQuery query);
+    List<FindCompositeResult> getCompositeByBookTitle(String title, List<Long> libraryId);
+    List<FindCompositeResult> getCompositeBypublisher(String publisher, List<Long> libraryId);
+    List<FindCompositeResult> getCompositeByAuthor(String author, List<Long> libraryId);
+    List<FindCompositeResult> getCompositeByCategory(String category, List<Long> libraryId);
 
     @NoArgsConstructor
     @EqualsAndHashCode(callSuper = false)

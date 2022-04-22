@@ -76,12 +76,81 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
                 .map(CompositeEntity::toComposite)
                 .collect(Collectors.toList());
 
-        if(composites.isEmpty()){
-            return new ArrayList<>();
-        }
 
         return composites.stream().map(FindCompositeResult::findByComposite).collect(Collectors.toList());
     }
+
+
+    @Override
+    public List<FindCompositeResult> getCompositeByBookTitle(String title, List<Long> libraryId) {
+
+        List<CompositeEntity> result;
+
+        if(libraryId.isEmpty()){
+            result = compositeEntityRepository.findAllByTitle(title);
+        }
+        else{
+            result = compositeEntityRepository.findAllByTitleAndLibraryIdIn(title, libraryId);
+        }
+
+        List<Composite> compositeList = result.stream().map(CompositeEntity::toComposite).collect(Collectors.toList());
+
+        return compositeList.stream().map(FindCompositeResult::findByComposite).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FindCompositeResult> getCompositeBypublisher(String publisher, List<Long> libraryId) {
+
+        List<CompositeEntity> result;
+
+        if(libraryId.isEmpty()){
+            result = compositeEntityRepository.findAllByPublisher(publisher);
+        }
+        else{
+            result = compositeEntityRepository.findAllByPublisherAndLibraryIdIn(publisher, libraryId);
+        }
+
+        List<Composite> compositeList = result.stream().map(CompositeEntity::toComposite).collect(Collectors.toList());
+
+        return compositeList.stream().map(FindCompositeResult::findByComposite).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FindCompositeResult> getCompositeByAuthor(String author, List<Long> libraryId) {
+        List<CompositeEntity> result;
+
+        if(libraryId.isEmpty()){
+            result = compositeEntityRepository.findAllByAuthor(author);
+        }
+        else{
+            result = compositeEntityRepository.findAllByAuthorAndLibraryIdIn(author, libraryId);
+        }
+
+        List<Composite> compositeList = result.stream().map(CompositeEntity::toComposite).collect(Collectors.toList());
+
+        return compositeList.stream().map(FindCompositeResult::findByComposite).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FindCompositeResult> getCompositeByCategory(String category, List<Long> libraryId) {
+
+        List<CompositeEntity> result;
+
+        if(libraryId.isEmpty()){
+            result = compositeEntityRepository.findAllByCategory(category);
+        }
+        else{
+            result = compositeEntityRepository.findAllByCategoryAndLibraryIdIn(category, libraryId);
+        }
+
+        List<Composite> compositeList = result.stream().map(CompositeEntity::toComposite).collect(Collectors.toList());
+
+        return compositeList.stream().map(FindCompositeResult::findByComposite).collect(Collectors.toList());
+
+    }
+
+
+
 
     @Override
     public FindCompositeResult updateBookStatus(BookStatusUpdateCommand command, Long bookId) {
