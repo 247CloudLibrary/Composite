@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -158,8 +160,21 @@ class CompositeServiceTest {
         var result = compositeService.updateReservationInfo(command, 1L);
         //then
         System.out.println(compositeService.getCompositeByBookId(new CompositeReadUseCase.BookFindQuery(1L)));
-
     }
 
 
+    @Test
+    @Order(7)
+    @DisplayName("책 이름으로 조회 테스트")
+    public void getCompositeByBookTitleTest() throws Exception
+    {
+        //given
+        List<Long> libraryId = new ArrayList();
+        //when
+        var result = compositeService.getCompositeByBookTitle("테스트 책 도서", libraryId);
+        //then
+        for (CompositeReadUseCase.FindCompositeResult findCompositeResult : result) {
+            System.out.println("findCompositeResult = " + findCompositeResult);
+        }
+    }
 }
