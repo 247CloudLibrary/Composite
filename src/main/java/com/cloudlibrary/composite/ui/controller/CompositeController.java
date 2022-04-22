@@ -5,6 +5,8 @@ import com.cloudlibrary.composite.application.domain.Composite;
 import com.cloudlibrary.composite.application.service.CompositeOperationUseCase;
 import com.cloudlibrary.composite.application.service.CompositeReadUseCase;
 import com.cloudlibrary.composite.application.service.CompositeService;
+import com.cloudlibrary.composite.exception.CloudLibraryException;
+import com.cloudlibrary.composite.exception.MessageType;
 import com.cloudlibrary.composite.ui.requestbody.BookStatusUpdateRequest;
 import com.cloudlibrary.composite.ui.requestbody.CompositeCreateRequest;
 import com.cloudlibrary.composite.ui.requestbody.LendingStatusUpdateRequest;
@@ -17,11 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -78,13 +77,16 @@ public class CompositeController {
                 .reservationDateTime(request.getReservationDateTime())
                 .build();
 
-        var reuslt = compositeService.createComposite(command);
+        var result = compositeService.createComposite(command);
 
+        if(result.getBookId() == -1L){
+            throw new CloudLibraryException(MessageType.INTERNAL_SERVER_ERROR);
+        }
 
-        return ResponseEntity.ok(new ApiResponseView<>(new CompositeView(reuslt)));
+        return ResponseEntity.ok(new ApiResponseView<>(new CompositeView(result)));
     }
 
-    // TODO : PATCH 분실 등록
+
     @PatchMapping("/bookstatus/{bookId}")
     public ResponseEntity<ApiResponseView<CompositeView>> updateBookStatus(@RequestBody BookStatusUpdateRequest request, @PathVariable("bookId") Long bookId){
 
@@ -94,13 +96,15 @@ public class CompositeController {
 
         var result = compositeService.updateBookStatus(command, bookId);
 
-        // TODO: 2022/04/21 예외처리
 
+        if(result.getBookId() == -1L){
+            throw new CloudLibraryException(MessageType.BAD_REQUEST);
+        }
 
         return ResponseEntity.ok(new ApiResponseView<>(new CompositeView(result)));
     }
 
-    // TODO : PATCH 대출/반납/연체 lendingStatus 변경
+
     @PatchMapping("/lending/{bookId}")
     public ResponseEntity<ApiResponseView<CompositeView>> updateLendingStatus(@RequestBody LendingStatusUpdateRequest request, @PathVariable("bookId") Long bookId){
 
@@ -109,10 +113,15 @@ public class CompositeController {
                 .build();
 
         var result = compositeService.updateLendingStatus(command, bookId);
+
+        if(result.getBookId() == -1L){
+            throw new CloudLibraryException(MessageType.BAD_REQUEST);
+        }
+
         return ResponseEntity.ok(new ApiResponseView<>(new CompositeView(result)));
     }
 
-    // TODO : PATCH 예약
+
     @PatchMapping("/reservation")
     public ResponseEntity<ApiResponseView<CompositeView>> updateReservationInfo(@RequestBody ReservationUpdateRequest request, Long bookId){
 
@@ -129,49 +138,45 @@ public class CompositeController {
 
         var result = compositeService.updateReservationInfo(command, bookId);
 
+        if(result.getBookId() == -1L){
+            throw new CloudLibraryException(MessageType.BAD_REQUEST);
+        }
+
         return ResponseEntity.ok(new ApiResponseView<>(new CompositeView(result)));
     }
 
-    // TODO : 도서 리스트 조회
     @GetMapping("/search")
-    public ResponseEntity<ApiResponseView<List<CompositeCompactView>>> getComposite(@RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "libraryArr", required = false) List<Long> libraryId,
+    public ResponseEntity<ApiResponseView<List<CompositeView>>> getComposite(@RequestParam(value = "bookTitle", required = false) String bookTitle, @RequestParam(value = "libraryArr", required = false) List<Long> libraryId,
                                                        @RequestParam (value = "publisher", required = false) String publisher, @RequestParam(value = "author", required = false) String author,
                                                        @RequestParam (value = "category", required = false) String category){
-        
 
-        if(keyword != null && (!keyword.isEmpty())){
+        List<CompositeReadUseCase.FindCompositeResult> results = null;
 
-        }
-
-        if(!libraryId.isEmpty()){
-
+        if(bookTitle != null && (!bookTitle.isEmpty())){
+            results = compositeService.getCompositeByBookTitle(bookTitle, libraryId);
         }
 
         if(publisher != null && (!publisher.isEmpty())){
-
+            results = compositeService.getCompositeBypublisher(publisher, libraryId);
         }
 
         if(author != null && !(author.isEmpty())){
-
+            results = compositeService.getCompositeByAuthor(author, libraryId);
         }
 
         if(category != null && !(category.isEmpty())){
-
+            results = compositeService.getCompositeByCategory(category, libraryId);
         }
 
+        if(results == null || results.isEmpty()){
+            throw new CloudLibraryException(MessageType.BAD_REQUEST);
+        }
 
-
-
-
-
-
-
-        return null;
+        var views = results.stream().map(CompositeView::new).collect(Collectors.toList());
+        return ResponseEntity.ok(new ApiResponseView<>(views));
 
     }
 
-
-    // TODO : 단일 도서 조회
     @GetMapping("/{bookId}")
     public ResponseEntity<ApiResponseView<CompositeCompactView>> getComposite(@PathVariable("bookId") Long bookId){
 
@@ -199,7 +204,9 @@ public class CompositeController {
                     .bookType(compositeByBookId.getBookType())
                     .build();
 
-        // TODO: 2022/04/21 예외처리
+        if(compositeByBookId.getBookId() == -1L){
+            throw new CloudLibraryException(MessageType.BAD_REQUEST);
+        }
 
         return ResponseEntity.ok(new ApiResponseView<>(new CompositeCompactView(composite)));
     }
