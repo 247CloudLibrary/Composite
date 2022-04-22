@@ -21,7 +21,7 @@ public class CompositeEntity implements Serializable {
     private Long compositeId;
     @Column(nullable = false, unique = true)
     private Long bookId;
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private Long libraryId;
 
     private String rid;
