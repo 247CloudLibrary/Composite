@@ -30,7 +30,7 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
 
         var query = new BookFindQuery(command.getBookId());
 
-        var findCompositeEntity = compositeEntityRepository.findById(query.getBookId());
+        var findCompositeEntity = compositeEntityRepository.findByBookId(query.getBookId());
 
 
         // update
@@ -58,7 +58,7 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
     @Override
     public FindCompositeResult getCompositeByBookId(BookFindQuery query) {
 
-        var compositeEntity = compositeEntityRepository.findById(query.getBookId());
+        var compositeEntity = compositeEntityRepository.findByBookId(query.getBookId());
 
         if(compositeEntity.isPresent()){
             return FindCompositeResult.findByComposite(compositeEntity.get().toComposite());
@@ -156,7 +156,7 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
     public FindCompositeResult updateBookStatus(BookStatusUpdateCommand command, Long bookId) {
 
 
-        var compositeEntity = compositeEntityRepository.findById(bookId);
+        var compositeEntity = compositeEntityRepository.findByBookId(bookId);
         if(compositeEntity.isPresent()){
             mapperForService.updateBookStatusFromCompositeEntity(command, compositeEntity.get());
             compositeEntityRepository.save(compositeEntity.get());
@@ -170,7 +170,7 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
     @Override
     public FindCompositeResult updateLendingStatus(LendingStatusUpdateCommand command, Long bookId) {
 
-        var compositeEntity = compositeEntityRepository.findById(bookId);
+        var compositeEntity = compositeEntityRepository.findByBookId(bookId);
         if(compositeEntity.isPresent()){
             mapperForService.updateLendingStatusFromCompoisteEntity(command, compositeEntity.get());
             compositeEntityRepository.save(compositeEntity.get());
@@ -184,7 +184,7 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
     @Override
     public FindCompositeResult updateReservationInfo(ReservationInfoUpdateCommand command, Long bookId) {
 
-        var compositeEntity = compositeEntityRepository.findById(bookId);
+        var compositeEntity = compositeEntityRepository.findByBookId(bookId);
         if(compositeEntity.isPresent()){
 
             mapperForService.updateReservationInfoFromCompositeEntity(command, compositeEntity.get());
