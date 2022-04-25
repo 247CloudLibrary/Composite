@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/v1/composite")
 public class CompositeController {
 
-    private CompositeService compositeService;
+    private final CompositeService compositeService;
 
     @Autowired
     public CompositeController(CompositeService compositeService) {
@@ -87,7 +87,7 @@ public class CompositeController {
     }
 
 
-    @PatchMapping("/bookstatus/{bookId}")
+    @PutMapping("/bookstatus/{bookId}")
     public ResponseEntity<ApiResponseView<CompositeView>> updateBookStatus(@RequestBody BookStatusUpdateRequest request, @PathVariable("bookId") Long bookId){
 
         var command = CompositeOperationUseCase.BookStatusUpdateCommand.builder()
@@ -105,7 +105,7 @@ public class CompositeController {
     }
 
 
-    @PatchMapping("/lending/{bookId}")
+    @PutMapping("/lending/{bookId}")
     public ResponseEntity<ApiResponseView<CompositeView>> updateLendingStatus(@RequestBody LendingStatusUpdateRequest request, @PathVariable("bookId") Long bookId){
 
         var command = CompositeOperationUseCase.LendingStatusUpdateCommand.builder()
@@ -122,7 +122,7 @@ public class CompositeController {
     }
 
 
-    @PatchMapping("/reservation")
+    @PutMapping("/reservation")
     public ResponseEntity<ApiResponseView<CompositeView>> updateReservationInfo(@RequestBody ReservationUpdateRequest request, Long bookId){
 
         var command = CompositeOperationUseCase.ReservationInfoUpdateCommand.builder()
@@ -168,7 +168,11 @@ public class CompositeController {
             results = compositeService.getCompositeByCategory(category, libraryId);
         }
 
-        if(results == null || results.isEmpty()){
+        if(results == null){
+            results = compositeService.getCompositeListAll();
+        }
+
+        if(results.isEmpty()){
             throw new CloudLibraryException(MessageType.BAD_REQUEST);
         }
 
@@ -178,37 +182,17 @@ public class CompositeController {
     }
 
     @GetMapping("/{bookId}")
-    public ResponseEntity<ApiResponseView<CompositeCompactView>> getComposite(@PathVariable("bookId") Long bookId){
+    public ResponseEntity<ApiResponseView<CompositeView>> getComposite(@PathVariable("bookId") Long bookId){
 
         var query = new CompositeReadUseCase.BookFindQuery(bookId);
 
-        var compositeByBookId = compositeService.getCompositeByBookId(query);
+        var result = compositeService.getCompositeByBookId(query);
 
-        var composite = Composite.builder()
-                    .bookId(compositeByBookId.getBookId())
-                    .libraryId(compositeByBookId.getLibraryId())
-                    .libraryName(compositeByBookId.getLibraryName())
-                    .barcode(compositeByBookId.getBarcode())
-                    .title(compositeByBookId.getTitle())
-                    .thumbNailImage(compositeByBookId.getThumbNailImage())
-                    .coverImage(compositeByBookId.getCoverImage())
-                    .author(compositeByBookId.getAuthor())
-                    .translator(compositeByBookId.getTranslator())
-                    .contents(compositeByBookId.getContents())
-                    .publisher(compositeByBookId.getPublisher())
-                    .publishDate(compositeByBookId.getPublishDate())
-                    .genre(compositeByBookId.getGenre())
-                    .lendingStatus(compositeByBookId.getLendingStatus())
-                    .lendingDateTime(compositeByBookId.getLendingDateTime())
-                    .category(compositeByBookId.getCategory())
-                    .bookType(compositeByBookId.getBookType())
-                    .build();
-
-        if(compositeByBookId.getBookId() == -1L){
+        if(result.getBookId() == -1L){
             throw new CloudLibraryException(MessageType.BAD_REQUEST);
         }
 
-        return ResponseEntity.ok(new ApiResponseView<>(new CompositeCompactView(composite)));
+        return ResponseEntity.ok(new ApiResponseView<>(new CompositeView(result)));
     }
 
 }
