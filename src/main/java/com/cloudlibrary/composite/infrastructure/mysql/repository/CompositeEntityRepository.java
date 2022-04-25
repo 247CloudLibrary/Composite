@@ -13,6 +13,8 @@ public interface CompositeEntityRepository extends JpaRepository<CompositeEntity
 
     Optional<CompositeEntity> findByBookId(Long BookId);
 
+    Optional<CompositeEntity> findByLibraryId(Long LibraryId);
+
     List<CompositeEntity> findAllByTitle(String title);
     List<CompositeEntity> findAllByTitleAndLibraryIdIn(String title, List<Long> libraryId);
 
@@ -24,4 +26,6 @@ public interface CompositeEntityRepository extends JpaRepository<CompositeEntity
 
     List<CompositeEntity> findAllByAuthorAndLibraryIdIn(String author, List<Long> libraryId);
     List<CompositeEntity> findAllByAuthor(String author);
+
+
 }

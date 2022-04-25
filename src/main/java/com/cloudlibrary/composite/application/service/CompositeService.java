@@ -16,8 +16,8 @@ import java.util.stream.StreamSupport;
 @Service
 public class CompositeService implements CompositeReadUseCase, CompositeOperationUseCase{
 
-    private CompositeEntityRepository compositeEntityRepository;
-    private MapperForService mapperForService;
+    private final CompositeEntityRepository compositeEntityRepository;
+    private final MapperForService mapperForService;
 
     @Autowired
     public CompositeService(CompositeEntityRepository compositeEntityRepository, MapperForService mapperForService) {
@@ -195,8 +195,23 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
 
         return notFoundComposite();
 
+
+
     }
 
+    @Override
+    public FindCompositeResult deleteComposite(Long libraryId) {
+
+        var compositeEntity = compositeEntityRepository.findByLibraryId(libraryId);
+
+        if(compositeEntity.isPresent()){
+            var deletedEntity = compositeEntity.get().toComposite();
+            compositeEntityRepository.delete(compositeEntity.get());
+            return FindCompositeResult.findByComposite(deletedEntity);
+        }
+
+        return notFoundComposite();
+    }
 
     private FindCompositeResult notFoundComposite() {
         return FindCompositeResult.findByComposite(Composite.builder()

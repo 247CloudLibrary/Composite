@@ -15,8 +15,7 @@ public interface CompositeOperationUseCase {
     CompositeReadUseCase.FindCompositeResult updateLendingStatus(LendingStatusUpdateCommand command, Long bookId);
     CompositeReadUseCase.FindCompositeResult updateReservationInfo(ReservationInfoUpdateCommand command, Long bookId);
 
-//  도서 또는 도서관 정보 업데이트 관련
-//  CompositeReadUseCase.FindCompositeResult updateComposite(CompositeUpdateCommand command);
+    CompositeReadUseCase.FindCompositeResult deleteComposite(Long libraryId);
 
     @EqualsAndHashCode(callSuper = false)
     @Builder
