@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @Api("컴포짓 API")
+@CrossOrigin(origins = "*")
 @RequestMapping("/v1/composite")
 public class CompositeController {
 
@@ -195,4 +196,16 @@ public class CompositeController {
         return ResponseEntity.ok(new ApiResponseView<>(new CompositeView(result)));
     }
 
+    @DeleteMapping("/{libraryId}")
+    public ResponseEntity<ApiResponseView<CompositeView>> deleteComposite(@PathVariable("libraryId") Long libraryId){
+
+
+        var result = compositeService.deleteComposite(libraryId);
+
+        if(result.getBookId() == -1L){
+            throw new CloudLibraryException(MessageType.BAD_REQUEST);
+        }
+
+        return ResponseEntity.ok(new ApiResponseView<>(new CompositeView(result)));
+    }
 }
