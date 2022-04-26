@@ -72,7 +72,7 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
 
         var compositeEntities = compositeEntityRepository.findAll();
 
-        var composites = StreamSupport.stream(compositeEntities.spliterator(), false)
+        var composites = compositeEntities.stream()
                 .map(CompositeEntity::toComposite)
                 .collect(Collectors.toList());
 
