@@ -93,6 +93,8 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
             result = compositeEntityRepository.findAllByTitleAndLibraryIdIn(title, libraryId);
         }
 
+        // ㅅㄷㄴㅅ
+
         List<Composite> compositeList = result.stream().map(CompositeEntity::toComposite).collect(Collectors.toList());
 
         return compositeList.stream().map(FindCompositeResult::findByComposite).collect(Collectors.toList());
