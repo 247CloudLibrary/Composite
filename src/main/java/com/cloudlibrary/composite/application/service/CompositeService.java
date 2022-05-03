@@ -150,8 +150,6 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
     }
 
 
-
-
     @Override
     public FindCompositeResult updateBookStatus(BookStatusUpdateCommand command, Long bookId) {
 
@@ -194,8 +192,6 @@ public class CompositeService implements CompositeReadUseCase, CompositeOperatio
 
 
         return notFoundComposite();
-
-
 
     }
 
