@@ -61,8 +61,8 @@ public interface CompositeReadUseCase {
         private final Long lendingId;
         private final Long uid;
         private final String lendingStatus;
-        private final LocalDateTime lendingDateTime;
-        private final LocalDateTime returnDateTime;
+        private final LocalDate lendingDateTime;
+        private final LocalDate returnDateTime;
         private final LocalDateTime reservationDateTime;
 
         // reservation Info

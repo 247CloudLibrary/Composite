@@ -52,8 +52,8 @@ public class CompositeEntity implements Serializable {
     @Column(unique = true)
     private Long uid;
     private String lendingStatus;
-    private LocalDateTime lendingDateTime;
-    private LocalDateTime returnDateTime;
+    private LocalDate lendingDateTime;
+    private LocalDate returnDateTime;
     private LocalDateTime reservationDateTime;
 
     // reservation Info

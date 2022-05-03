@@ -42,8 +42,8 @@ public class CompositeCreateRequest {
     private Long lendingId;
     private Long uid;
     private String lendingStatus;
-    private LocalDateTime lendingDateTime;
-    private LocalDateTime returnDateTime;
+    private LocalDate lendingDateTime;
+    private LocalDate returnDateTime;
     private LocalDateTime reservationDateTime;
 
     // reservation Info

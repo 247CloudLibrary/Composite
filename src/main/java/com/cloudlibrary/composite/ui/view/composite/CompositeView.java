@@ -67,9 +67,9 @@ public class CompositeView {
     @ApiModelProperty(value = "대출 상태")
     private final String lendingStatus;
     @ApiModelProperty(value = "대출 일자")
-    private final LocalDateTime lendingDateTime;
+    private final LocalDate lendingDateTime;
     @ApiModelProperty(value = "반납 일자")
-    private final LocalDateTime returnDateTime;
+    private final LocalDate returnDateTime;
     @ApiModelProperty(value = "예약 일자")
     private final LocalDateTime reservationDateTime;
 
